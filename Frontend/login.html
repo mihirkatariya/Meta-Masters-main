@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack-Pal - Your Smart Packing Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f9f9f9;
+            color: #333;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #4682B4, #87CEEB);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-right: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .btn {
+            border-radius: 25px;
+            border: none;
+            background: white;
+            color: #4682B4;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4682B4, #87CEEB);
+            color: white;
+            padding: 150px 20px 100px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #4682B4;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5em;
+            color: #333;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(to right, #4682B4, #87CEEB);
+            bottom: 0;
+            left: 20%;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4682B4, #87CEEB);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 30px;
+        }
+        
+        .feature-card h3 {
+            margin: 15px 0;
+            font-size: 1.5em;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about {
+            background: #f1f8ff;
+            padding: 80px 20px;
+        }
+        
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: 400px;
+            background: linear-gradient(135deg, #4682B4, #87CEEB);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Login/Signup Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+            width: 768px;
+            max-width: 100%;
+            min-height: 550px;
+        }
+        
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+        
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+        
+        .modal-container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+        
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        .modal-container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+        
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+            
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+        
+        form {
+            background-color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        h1.brand {
+            color: #4682B4;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+        
+        input {
+            background-color: #f7f7f7;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            background-color: #fff;
+            box-shadow: 0 0 0 2px rgba(52, 148, 230, 0.3);
+        }
+        
+        button {
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(to right, #4682B4, #87CEEB);
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(70, 130, 180, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(70, 130, 180, 0.5);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 8px rgba(70, 130, 180, 0.3);
+        }
+        
+        button.ghost {
+            background: transparent;
+            border: 2px solid #FFFFFF;
+            box-shadow: none;
+        }
+        
+        button.ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+        
+        .modal-container.right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+        
+        .overlay {
+            background: linear-gradient(to right, #4682B4, #87CEEB);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+        
+        .modal-container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+        
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+        
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+        
+        .modal-container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+        
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+        
+        .modal-container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+        
+        .social-container {
+            margin: 20px 0;
+        }
+        
+        .social-container a {
+            border: 1px solid #DDDDDD;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            height: 40px;
+            width: 40px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .social-container a:hover {
+            background-color: #f3f3f3;
+        }
+        
+        .form-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            z-index: 150;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: #333;
+            color: white;
+            padding: 50px 20px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, #4682B4, #87CEEB);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .overlay-container {
+                display: none;
+            }
+            
+            .sign-in-container, .sign-up-container {
+                width: 100%;
+            }
+            
+            .modal-container {
+                min-height: auto;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo"><span>P</span>ack-Pal</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" class="btn" id="open-auth-modal">Log In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Smart Packing Solutions for Every Journey</h1>
+            <p>Pack-Pal is your intelligent travel companion that helps you pack efficiently for any trip. Never forget essential items again!</p>
+            <div class="cta-buttons">
+                <a href="#features" class="btn btn-primary">Explore Features</a>
+                <a href="#" class="btn btn-secondary" id="open-signup">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Why Choose Pack-Pal?</h2>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Smart Packing Lists</h3>
+                <p>Generate customized packing lists based on your destination, weather, activities, and trip duration.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌦</div>
+                <h3>Weather Integration</h3>
+                <p>Pack-Pal checks the forecast for your destination and suggests appropriate clothing and gear.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Reusable Templates</h3>
+                <p>Save your favorite packing lists as templates for future trips of similar types.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Check-off System</h3>
+                <p>Keep track of what you've already packed with our intuitive check-off system.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Friendly</h3>
+                <p>Access your packing lists on any device - desktop, tablet, or smartphone.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Destination Tips</h3>
+                <p>Receive location-specific suggestions for essential items you might not have considered.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-title">
+            <h2>About Pack-Pal</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>Pack-Pal was born from a common travel problem - the stress of packing and the fear of forgetting essential items. Our mission is to make packing an effortless part of your travel experience.</p>
+                <p>Our team of avid travelers and tech enthusiasts developed Pack-Pal to be your intelligent travel companion. We combine personalized recommendations with smart technology to ensure you're always prepared for your journey.</p>
+                <p>Whether you're a business traveler, adventure seeker, or family on vacation, Pack-Pal adapts to your specific needs and helps you pack efficiently every time.</p>
+            </div>
+            <div class="about-image">
+                Pack-Pal Image
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Pack-Pal</h3>
+                <p>Smart packing solutions for every journey. Never forget essential items again!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#features">Features</a>
+                <a href="#about">About Us</a>
+                <a href="#" id="footer-signin">Sign In</a>
+                <a href="#" id="footer-signup">Register</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: info@packpal.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Pack-Pal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-container" id="modal-container">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div class="form-container sign-up-container">
+                <form id="signup-form">
+                    <h1 class="brand">Welcome to Pack-Pal</h1>
+                    <h2>Create Account</h2>
+                    <div class="form-group">
+                        <input type="text" placeholder="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Confirm Password" required />
+                    </div>
+                    <button type="submit">SIGN UP</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form id="login-form">
+                    <h1 class="brand">Welcome to Pack-Pal</h1>
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" required />
+                    </div>
+                    <button type="submit">LOGIN</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <div class="logo"><span>P</span>ack-Pal</div>
+                        <h1>Welcome Back!</h1>
+                        <p>Log in with your account details to continue your journey with Pack-Pal</p>
+                        <button class="ghost" id="modal-signin">LOGIN</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <div class="logo"><span>P</span>ack-Pal</div>
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your details and start your journey with Pack-Pal</p>
+                        <button class="ghost" id="modal-signup">SIGN UP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const authModal = document.getElementById('auth-modal');
+        const modalContainer = document.getElementById('modal-container');
+        const openAuthModal = document.getElementById('open-auth-modal');
+        const openSignup = document.getElementById('open-signup');
+        const closeModal = document.getElementById('close-modal');
+        const footerSignin = document.getElementById('footer-signin');
+        const footerSignup = document.getElementById('footer-signup');
+        
+        // Modal auth switch buttons
+        const modalSignUp = document.getElementById('modal-signup');
+        const modalSignIn = document.getElementById('modal-signin');
+        
+        // Open modal events
+        openAuthModal.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.classList.add('active');
+            modalContainer.classList.remove('right-panel-active');
+        });
+        
+        openSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.classList.add('active');
+            modalContainer.classList.add('right-panel-active');
+        });
+        
+        footerSignin.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.classList.add('active');
+            modalContainer.classList.remove('right-panel-active');
+        });
+        
+        footerSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.classList.add('active');
+            modalContainer.classList.add('right-panel-active');
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            authModal.classList.remove('active');
+        });
+        
+        // Click outside to close
+        window.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.classList.remove('active');
+            }
+        });
+        
+        // Switch between sign in and sign up
+        modalSignUp.addEventListener('click', () => {
+            modalContainer.classList.add('right-panel-active');
+        });
+        
+        modalSignIn.addEventListener('click', () => {
+            modalContainer.classList.remove('right-panel-active');
+        });
+
+        // Form submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            
+            // Here you would normally send this data to a server
+            console.log('Login attempt:', { email, password });
+            alert(Login successful!);
+            authModal.classList.remove('active');
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const passwords = this.querySelectorAll('input[type="password"]');
+            
+            if (passwords[0].value !== passwords[1].value) {
+                alert("Passwords don't match!");
+                return;
+            }
+            
+            // Here you would normally send this data to a server
+            console.log('Signup:', { username, email, password: passwords[0].value });
+            alert(Account created successfully!);
+            authModal.classList.remove('active');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
